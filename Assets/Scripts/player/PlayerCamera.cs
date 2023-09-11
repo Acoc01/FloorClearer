@@ -5,17 +5,16 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
-    //Sensibility attributes
+    private Transform player;
     public float sensX; 
     public float sensY;
-    //Current camera orientation
-    //public Transform orientation;
-    //Current camera rotation
-    public float xRotation;
-    public float yRotation;
+
+    public float xRotation = 0f;
+    public float yRotation = 0f;
 
     private void Start(){
         //Lock cursor on schreen and make it invisible
+        player = transform.root;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -25,18 +24,12 @@ public class PlayerCamera : MonoBehaviour
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
 
-        //unity rotation handeling 
-        yRotation += mouseX;
-        xRotation -= mouseY;
-        //Make the mouse not rotate all the way on looking up
-        xRotation = Mathf.Clamp(xRotation, -80f, 80f);
-        if(yRotation > 180f)
-            yRotation = -180f;
-        else if (yRotation < -180f)
-            yRotation = 180f;
+        yRotation -= mouseY;
+        xRotation = mouseX;
 
-        //rotate can and orientation
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        //orientation.rotation = Quaternion.Euler(0,yRotation,0);
+        yRotation = Mathf.Clamp(yRotation, -80f, 80f);
+        transform.localEulerAngles = Vector3.right * yRotation;
+        player.Rotate(Vector3.up * xRotation);
+        
     }
 }

@@ -4,26 +4,24 @@ using UnityEngine;
 
 public class PlayerSpellCasting : MonoBehaviour
 {
-    public Camera cam;
     private const int _maxBallCombination = 3;
     private const int _maxStoredSpells = 2;
+    
+    public BasicAttackFactory basicAttackFactory;
+    public Transform aimPointer;
 
     private List<ElementBall> elementBalls = new List<ElementBall>();
     private SpellCombination MagicMixer;
     public Queue<Spell> storedSpells = new Queue<Spell>();
-    
-
     public GameObject LightBall;
     public GameObject ArcaneBall;
     public GameObject SpiritBall;
-
-    private float _basicAttackForce = 30f;
-    public GameObject BasicAttackPrefab;
 
     public SpellUI SpellSlots;
 
     private void Start(){
         MagicMixer = GetComponent<SpellCombination>();
+        basicAttackFactory.Setup();
     }
     private void Update()
     {
@@ -69,17 +67,10 @@ public class PlayerSpellCasting : MonoBehaviour
             combinedSpell.CastSpell();
         }
         else {
-            BasicAttack();
+            basicAttackFactory.CreateBasicAttack(aimPointer);
         }
     }
 
-    private void BasicAttack(){
-        Debug.Log("Basic attack!");
-        GameObject bullet = Instantiate(BasicAttackPrefab, Camera.main.transform.position, Quaternion.identity);
-        Rigidbody rb = bullet.GetComponent<Rigidbody>();
-        rb.AddForce(Camera.main.transform.forward.normalized * _basicAttackForce, ForceMode.Impulse);
-
-    }
     private void CombineElements()
     {
         if (elementBalls.Count == _maxBallCombination && storedSpells.Count < _maxStoredSpells)

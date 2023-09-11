@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IceShard : Proyectile
+public class IceShard : Projectile
 {
     private Rigidbody rb;
     private Vector3 moveDirection;

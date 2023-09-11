@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicAttackBullet : MonoBehaviour
+public class BasicAttackBullet : Projectile
 {
     public float lifetime = 30f;
 
