@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class PlayerSpellCasting : MonoBehaviour
 {
+    public Camera cam;
     private const int _maxBallCombination = 3;
     private const int _maxStoredSpells = 2;
 
     private List<ElementBall> elementBalls = new List<ElementBall>();
-    public Queue<Spell> storedSpells = new Queue<Spell>();
     private SpellCombination MagicMixer;
+    public Queue<Spell> storedSpells = new Queue<Spell>();
+    
 
     public GameObject LightBall;
     public GameObject ArcaneBall;
     public GameObject SpiritBall;
+
+    private float _basicAttackForce = 30f;
+    public GameObject BasicAttackPrefab;
 
     public SpellUI SpellSlots;
 
@@ -44,10 +49,11 @@ public class PlayerSpellCasting : MonoBehaviour
         {
             DeleteElementBall();
         }
-        // else if (Input.GetKeyDown(KeyCode.E))
-        // {
-        //     CombineElements();
-        // }
+        else if (Input.GetKeyDown(KeyCode.E))
+        {
+            if(elementBalls.Count == _maxBallCombination)
+                CombineElements();
+        }
         else if (Input.GetMouseButtonDown(0))
         {
             CastSpell();
@@ -57,10 +63,22 @@ public class PlayerSpellCasting : MonoBehaviour
     {
         if (storedSpells.Count > 0)
         {
+            //Spell combinedSpell = storedSpells.Peek();
             Spell combinedSpell = storedSpells.Dequeue();
             SpellSlots.UseSpell();
             combinedSpell.CastSpell();
         }
+        else {
+            BasicAttack();
+        }
+    }
+
+    private void BasicAttack(){
+        Debug.Log("Basic attack!");
+        GameObject bullet = Instantiate(BasicAttackPrefab, Camera.main.transform.position, Quaternion.identity);
+        Rigidbody rb = bullet.GetComponent<Rigidbody>();
+        rb.AddForce(Camera.main.transform.forward.normalized * _basicAttackForce, ForceMode.Impulse);
+
     }
     private void CombineElements()
     {
@@ -70,12 +88,10 @@ public class PlayerSpellCasting : MonoBehaviour
             for (int i = 0; i < _maxBallCombination; i++)
                 Debug.Log(elementBalls[i].elementType);
 
-            // Create a new combined spell
             Spell tempSpell = MagicMixer.Combine(elementBalls);
             storedSpells.Enqueue(tempSpell);
             SpellSlots.AddSpell(tempSpell);
 
-            // Clear the list of elementBalls
             foreach (ElementBall ball in elementBalls)
             {
                 Destroy(ball.gameObject);
@@ -92,37 +108,36 @@ public class PlayerSpellCasting : MonoBehaviour
 
     private void CreateElementBall(Element elementType)
     {
-        if (elementBalls.Count < _maxBallCombination) // Check if there's room to create a new ball
+        if (elementBalls.Count == _maxBallCombination) 
         {
-            GameObject newBall = null;
-            // Instantiate a new ElementBall prefab
-            if (elementType == Element.Light)
-            {
-                newBall = Instantiate(LightBall, transform.position, Quaternion.identity);
-            }
-            else if (elementType == Element.Arcane)
-            {
-                newBall = Instantiate(ArcaneBall, transform.position, Quaternion.identity);
-            }
-            else if (elementType == Element.Spirit)
-            {
-                newBall = Instantiate(SpiritBall, transform.position, Quaternion.identity);
-            }
-
-           
-            ElementBall ballScript = newBall.GetComponent<ElementBall>();
-            ballScript.elementType = elementType;
-
-            // Assign the camera to the ball's caster variable
-            ballScript.caster = Camera.main;
-
-            // Add the new ball to the list and update ball numbers\
-            ballScript.ballNumber = elementBalls.Count;
-            elementBalls.Add(ballScript); 
-
-            if(elementBalls.Count == _maxBallCombination)
-                CombineElements();
+            Destroy(elementBalls[elementBalls.Count - 1].gameObject);
+            elementBalls.RemoveAt(elementBalls.Count - 1);
         }
+        GameObject newBall = null;
+        // Instantiate a new ElementBall prefab
+        if (elementType == Element.Light)
+        {
+            newBall = Instantiate(LightBall, transform.position, Quaternion.identity);
+        }
+        else if (elementType == Element.Arcane)
+        {
+            newBall = Instantiate(ArcaneBall, transform.position, Quaternion.identity);
+        }
+        else if (elementType == Element.Spirit)
+        {
+            newBall = Instantiate(SpiritBall, transform.position, Quaternion.identity);
+        }
+
+        foreach (ElementBall ball in elementBalls){
+            ball.ballNumber += 1;
+        }
+
+        ElementBall ballScript = newBall.GetComponent<ElementBall>();
+        ballScript.elementType = elementType;
+
+        ballScript.caster = Camera.main;
+        ballScript.ballNumber = 0;
+        elementBalls.Insert(0,ballScript); 
     }
 
     private void DeleteElementBall()

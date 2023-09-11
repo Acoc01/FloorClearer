@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArcaneMissiles : Spell
+public class ArcaneMissilesSpell : Spell
 {
     public GameObject missilePrefab;
     public int numProjectiles = 3;
@@ -13,7 +13,7 @@ public class ArcaneMissiles : Spell
 
     private float _xSpawnOffset = 0.2f;
 
-    public ArcaneMissiles()
+    public ArcaneMissilesSpell()
     {
         damage = 1;
         manaCost = 1;

@@ -9,7 +9,7 @@ public class PlayerCamera : MonoBehaviour
     public float sensX; 
     public float sensY;
     //Current camera orientation
-    public Transform orientation;
+    //public Transform orientation;
     //Current camera rotation
     public float xRotation;
     public float yRotation;
@@ -30,9 +30,13 @@ public class PlayerCamera : MonoBehaviour
         xRotation -= mouseY;
         //Make the mouse not rotate all the way on looking up
         xRotation = Mathf.Clamp(xRotation, -80f, 80f);
+        if(yRotation > 180f)
+            yRotation = -180f;
+        else if (yRotation < -180f)
+            yRotation = 180f;
 
         //rotate can and orientation
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        orientation.rotation = Quaternion.Euler(0,yRotation,0);
+        //orientation.rotation = Quaternion.Euler(0,yRotation,0);
     }
 }

@@ -671,7 +671,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -765,7 +765,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensX: 400
   sensY: 400
-  orientation: {fileID: 451327768}
   xRotation: 0
   yRotation: 0
 --- !u!1 &134461092
@@ -783,7 +782,7 @@ GameObject:
   - component: {fileID: 134461099}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -835,11 +834,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a9e832bf1eebd14b95e73faada4a9fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 112430322}
   LightBall: {fileID: 2162934309380248175, guid: ee22982a62af0f34f8bf33c7a46bc117,
     type: 3}
   ArcaneBall: {fileID: 2162934309380248175, guid: f44aa79e0f1735848af9b50aca55db91,
     type: 3}
   SpiritBall: {fileID: 2162934309380248175, guid: cb11d60fc3da5dd4fb0b6564fa6dfe4e,
+    type: 3}
+  BasicAttackPrefab: {fileID: 3849457984163924473, guid: 84406312fc4c35e4a844ba8c5c263c99,
     type: 3}
   SpellSlots: {fileID: 1361058581}
 --- !u!114 &134461098
@@ -854,7 +856,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a962181075120e542901f313e02d1765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arcaneMissilesPrefab: {fileID: 6897240093383624588, guid: fc6b425fceaca304c9605777c6ce5ad2,
+  arcaneMissilesSpellPrefab: {fileID: 6897240093383624588, guid: fc6b425fceaca304c9605777c6ce5ad2,
+    type: 3}
+  iceShardSpellPrefab: {fileID: 7803191685245146847, guid: e5303fc4125f55d4eb26fc41feccdbf7,
     type: 3}
 --- !u!143 &134461099
 CharacterController:
@@ -6546,7 +6550,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -403.4, y: 159.5}
+  m_AnchoredPosition: {x: -449, y: 159.5}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1361058581

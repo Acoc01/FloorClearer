@@ -6,21 +6,50 @@ public class SpellUI : MonoBehaviour
 {
     public GameObject spellImagePrefab;
     public Transform spellImagesParent;
+    public Sprite placeHolderSpell;
 
     private Queue<Spell> storedSpells = new Queue<Spell>();
     private List<Image> spellImages = new List<Image>();
+    private static SpellUI _instance;
 
-    public Sprite placeHolderSpell;
+    public static SpellUI Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<SpellUI>();
+                if (_instance == null)
+                {
+                    GameObject obj = new GameObject("SpellUI");
+                    _instance = obj.AddComponent<SpellUI>();
+                }
+            }
+            return _instance;
+        }
+    }
+
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
+        _instance = this;
+    }
 
     public void AddSpell(Spell spell)
     {
         storedSpells.Enqueue(spell);
 
-        // Create a new UI image for the added spell
         Image spellImage = Instantiate(spellImagePrefab, spellImagesParent).GetComponent<Image>();
-        spellImage.sprite = placeHolderSpell; // Using the placeHolderSpell sprite
+        if (spell.thumbnail != null)
+            spellImage.sprite = spell.thumbnail;
+        else
+            spellImage.sprite = placeHolderSpell;
         spellImages.Add(spellImage);
-
         UpdateUIPositions();
     }
 
@@ -29,8 +58,6 @@ public class SpellUI : MonoBehaviour
         if (storedSpells.Count > 0)
         {
             storedSpells.Dequeue();
-
-            // Remove the oldest UI image
             if (spellImages.Count > 0)
             {
                 Destroy(spellImages[0].gameObject);
@@ -44,11 +71,13 @@ public class SpellUI : MonoBehaviour
     {
         float xOffset = 50f;
         float xPosition = 0f;
-
+        float lerpSpeed = 10f;
         foreach (Image spellImage in spellImages)
         {
-            spellImage.transform.localPosition = new Vector3(xPosition, 0f, 0f);
+            Vector3 targetPosition = new Vector3(xPosition, 0f, 0f);
+            spellImage.transform.localPosition = Vector3.Lerp(spellImage.transform.localPosition, targetPosition, lerpSpeed);
             xPosition += xOffset;
         }
     }
+
 }

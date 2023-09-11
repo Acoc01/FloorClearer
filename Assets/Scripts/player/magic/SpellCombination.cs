@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class SpellCombination : MonoBehaviour
 {
-    public ArcaneMissiles arcaneMissilesPrefab;
+    public ArcaneMissilesSpell arcaneMissilesSpellPrefab;
+    public IceShardSpell iceShardSpellPrefab;
     public Spell Combine(List<ElementBall> elementBalls)
     {
         int _spellID = 0;
@@ -30,9 +31,13 @@ public class SpellCombination : MonoBehaviour
 
     private Spell getCombinedSpell(int SID)
     {
+        Debug.Log("Combined Spell ID: "+ SID);
         if (SID == 30)
         {
-            return arcaneMissilesPrefab;
+            return arcaneMissilesSpellPrefab;
+        }
+        else if (SID == 120){
+            return iceShardSpellPrefab;
         }
         else
         {
