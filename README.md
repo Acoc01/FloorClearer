@@ -16,13 +16,14 @@ Instalación
 git clone https://github.com/Nispeter/FloorClearer.git
 Abre el juego en tu plataforma de desarrollo favorita.
 
-
 ## Controles
 W, A, S, D: Mover al personaje.
 Ratón: Apuntar y lanzar hechizos.
 1, 2, 3: Cambiar entre elementos (mente, espíritu, cuerpo).
 Espacio: Saltar.
-E: Interactuar con objetos y activar mecanismos mágicos.
+R: Remover Elemento.
+E: Combinar elementos.
+LMBT: Lanzar el hechizo.
 Contribuir
 ¡Agradecemos las contribuciones! Si deseas contribuir a este proyecto, sigue estos pasos:
 
