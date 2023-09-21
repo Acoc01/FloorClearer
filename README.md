@@ -1,3 +1,6 @@
+# Developer branch
+Aqui van todos los cambios y versiones cursed del juego, una vez se tenga una version funcional, sera subida a la rama main.
+
 # Floor Clearer
 (agregar captura)
 
