@@ -14,7 +14,15 @@ public class BasicAttackBullet : Projectile
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag != "Player")
+        if(other.gameObject.tag == "Enemy")
+    {
+        Enemy enemy = other.gameObject.GetComponent<Enemy>();
+        if(enemy != null)
+        {
+            enemy.TakeDamage(proyectileDamage);
             Destroy(gameObject);
+        }
+    }
+
     }
 }

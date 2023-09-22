@@ -30,7 +30,6 @@ public class FirstPersonMovement : MonoBehaviour
     private void Update()
     {
         HandleMovement();
-        HandleRotation();
         HandleJump();
     }
 
@@ -70,15 +69,9 @@ public class FirstPersonMovement : MonoBehaviour
         {
             if (velocity.y < 0)
             {
-                velocity.y = -1f; // Prevent accumulating gravity when grounded
+                velocity.y = -1f; 
             }
         }
-    }
-
-    private void HandleRotation()
-    {
-        // Quaternion targetRotation = Quaternion.LookRotation(new Vector3(cameraTransform.forward.x, 0f, cameraTransform.right.z));
-        // transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
     private void HandleJump()

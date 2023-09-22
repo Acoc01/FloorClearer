@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BasicAttackFactory : MonoBehaviour
+public class BasicAttackFactory : Factory
 {
     public GameObject BasicAttackPrefab;
     public float basicAttackForce = 30f;
@@ -8,7 +8,8 @@ public class BasicAttackFactory : MonoBehaviour
 
     [SerializeField] private float _basicShootTime = 0f;
 
-    public void Setup(){
+    public void Setup()
+    {
         _basicShootTime = 0f;
     }
 
@@ -16,7 +17,7 @@ public class BasicAttackFactory : MonoBehaviour
     {
         if (Time.time > _basicShootTime)
         {
-            GameObject bullet = Instantiate(BasicAttackPrefab, aimPointer.position, aimPointer.rotation);
+            GameObject bullet = InstantiatePrefab<GameObject>(BasicAttackPrefab, aimPointer.position, aimPointer.rotation);
             Rigidbody rb = bullet.GetComponent<Rigidbody>();
             rb.AddForce(Camera.main.transform.forward.normalized * basicAttackForce, ForceMode.Impulse);
             _basicShootTime = Time.time + basicShootRate;
