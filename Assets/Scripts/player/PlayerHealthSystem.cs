@@ -7,10 +7,22 @@ public class PlayerHealthSystem : MonoBehaviour, IHealth
     public float health { get; set; }
     public float remainingHealth { get; set; }
 
-    public void TakeDamage(float damage){
-
+    public void Start()
+    {
+        remainingHealth = health;
     }
-    public void Die(){
+
+    public void TakeDamage(float damage)
+    {
+        remainingHealth -= damage;
+
+        if (remainingHealth <= 0)
+        {
+            Die();
+        }
+    }
+    public void Die()
+    {
 
     }
 }

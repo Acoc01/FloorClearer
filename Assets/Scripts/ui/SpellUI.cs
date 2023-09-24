@@ -10,35 +10,6 @@ public class SpellUI : MonoBehaviour
 
     private Queue<Spell> storedSpells = new Queue<Spell>();
     private List<Image> spellImages = new List<Image>();
-    private static SpellUI _instance;
-
-    public static SpellUI Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindObjectOfType<SpellUI>();
-                if (_instance == null)
-                {
-                    GameObject obj = new GameObject("SpellUI");
-                    _instance = obj.AddComponent<SpellUI>();
-                }
-            }
-            return _instance;
-        }
-    }
-
-    private void Awake()
-    {
-        if (_instance != null && _instance != this)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-
-        _instance = this;
-    }
 
     public void AddSpell(Spell spell)
     {
@@ -79,5 +50,4 @@ public class SpellUI : MonoBehaviour
             xPosition += xOffset;
         }
     }
-
 }
