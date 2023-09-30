@@ -4,6 +4,7 @@ using UnityEngine;
 public class PointCounter : MonoBehaviour
 {
     public TextMeshProUGUI pointsText;
+
     private int currentPoints = 0;
 
     public int Points

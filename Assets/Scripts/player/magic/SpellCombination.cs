@@ -31,17 +31,20 @@ public class SpellCombination : MonoBehaviour
 
     private Spell getCombinedSpell(int SID)
     {
-        Debug.Log("Combined Spell ID: "+ SID);
+        Debug.Log("Combined Spell ID: " + SID);
+
         if (SID == 30)
         {
             return arcaneMissilesSpellPrefab;
         }
-        else if (SID == 120){
+        else if (SID == 120)
+        {
             return iceShardSpellPrefab;
         }
         else
         {
-            return null;
+            Debug.Log("Spell not implemented");
+            return arcaneMissilesSpellPrefab;
         }
     }
 }

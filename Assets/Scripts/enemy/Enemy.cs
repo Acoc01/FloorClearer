@@ -6,6 +6,7 @@ public abstract class Enemy : MonoBehaviour, IHealth
 {
     [SerializeField] protected float _health;
     [SerializeField] protected float _remainingHealth;
+    [SerializeField] private int _pointsOnKill;
 
     public float health
     {
@@ -26,6 +27,7 @@ public abstract class Enemy : MonoBehaviour, IHealth
         if (_remainingHealth <= 0)
         {
             Die();
+            PlayerUI.Instance.pointCounter.AddPoints(_pointsOnKill);
         }
     }
 

@@ -10,6 +10,7 @@ public class Enemy_02 : Enemy
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        remainingHealth = health;
     }
 
     private void Update()

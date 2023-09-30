@@ -3,21 +3,15 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    public PlayerHealthSystem playerHealth;  
-    private Image healthBarImage;
+    public Image healthBarImage;
 
     private void Awake()
     {
-        healthBarImage = GetComponent<Image>();
+
     }
 
-    private void Update()
+    public void UpdateHealthBar(float remainingHealth,float health)
     {
-        UpdateHealthBar();
-    }
-
-    void UpdateHealthBar()
-    {
-        healthBarImage.fillAmount = playerHealth.remainingHealth / playerHealth.health;
+        healthBarImage.fillAmount = remainingHealth / health;
     }
 }
