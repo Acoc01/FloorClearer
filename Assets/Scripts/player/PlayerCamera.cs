@@ -14,11 +14,6 @@ public class PlayerCamera : MonoBehaviour
 
     private void Start()
     {
-        GameObject newSceneMainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-        if (newSceneMainCamera)
-        {
-            Destroy(newSceneMainCamera);
-        }
         player = transform.root;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

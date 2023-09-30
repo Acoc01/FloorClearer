@@ -6,7 +6,7 @@ public class PlayerSpellCasting : MonoBehaviour
 {
     private const int _maxBallCombination = 3;
     private const int _maxStoredSpells = 2;
-    
+
     public BasicAttackFactory basicAttackFactory;
     public Transform aimPointer;
 
@@ -19,45 +19,35 @@ public class PlayerSpellCasting : MonoBehaviour
 
     public SpellUI SpellSlots;
 
-    private void Start(){
+    private void Start()
+    {
         MagicMixer = GetComponent<SpellCombination>();
         basicAttackFactory.Setup();
     }
-    private void Update()
-    {
-        MyInput();
-    }
 
-    private void MyInput()
+    public void CastSpellBasedOnKey(KeyCode key)
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        switch (key)
         {
-            CreateElementBall(Element.Light);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            CreateElementBall(Element.Arcane);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            CreateElementBall(Element.Spirit);
-        }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            DeleteElementBall();
-        }
-        else if (Input.GetKeyDown(KeyCode.E))
-        {
-            if(elementBalls.Count == _maxBallCombination)
-                CombineElements();
-        }
-        else if (Input.GetMouseButtonDown(0))
-        {
-            CastSpell();
+            case KeyCode.Alpha1:
+                CreateElementBall(Element.Light);
+                break;
+            case KeyCode.Alpha2:
+                CreateElementBall(Element.Arcane);
+                break;
+            case KeyCode.Alpha3:
+                CreateElementBall(Element.Spirit);
+                break;
+            case KeyCode.R:
+                DeleteElementBall();
+                break;
+            case KeyCode.E:
+                if (elementBalls.Count == _maxBallCombination)
+                    CombineElements();
+                break;
         }
     }
-    private void CastSpell()
+    public void CastSpell()
     {
         if (storedSpells.Count > 0)
         {
@@ -66,12 +56,13 @@ public class PlayerSpellCasting : MonoBehaviour
             SpellSlots.UseSpell();
             combinedSpell.CastSpell();
         }
-        else {
+        else
+        {
             basicAttackFactory.CreateBasicAttack(aimPointer);
         }
     }
 
-    private void CombineElements()
+    public void CombineElements()
     {
         if (elementBalls.Count == _maxBallCombination && storedSpells.Count < _maxStoredSpells)
         {
@@ -88,7 +79,7 @@ public class PlayerSpellCasting : MonoBehaviour
                 Destroy(ball.gameObject);
             }
             elementBalls.Clear();
-            
+
         }
         else
         {
@@ -99,7 +90,7 @@ public class PlayerSpellCasting : MonoBehaviour
 
     private void CreateElementBall(Element elementType)
     {
-        if (elementBalls.Count == _maxBallCombination) 
+        if (elementBalls.Count == _maxBallCombination)
         {
             Destroy(elementBalls[elementBalls.Count - 1].gameObject);
             elementBalls.RemoveAt(elementBalls.Count - 1);
@@ -119,7 +110,8 @@ public class PlayerSpellCasting : MonoBehaviour
             newBall = Instantiate(SpiritBall, transform.position, Quaternion.identity);
         }
 
-        foreach (ElementBall ball in elementBalls){
+        foreach (ElementBall ball in elementBalls)
+        {
             ball.ballNumber += 1;
         }
 
@@ -128,7 +120,7 @@ public class PlayerSpellCasting : MonoBehaviour
 
         ballScript.caster = Camera.main;
         ballScript.ballNumber = 0;
-        elementBalls.Insert(0,ballScript); 
+        elementBalls.Insert(0, ballScript);
     }
 
     private void DeleteElementBall()

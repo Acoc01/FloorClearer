@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerUI : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class PlayerUI : MonoBehaviour
 
     private void Awake()
     {
+        isGamePaused = false;
         if (_instance != null && _instance != this)
         {
             Destroy(this.gameObject);
@@ -34,6 +36,80 @@ public class PlayerUI : MonoBehaviour
         }
 
         _instance = this;
+        ActivateGameUI();
+        LockCursor();
+    }
+
+    public GameObject gameUI;
+    public GameObject pauseScreen;
+    public GameObject settingsScreen;
+    public bool isGamePaused = false;
+
+    private void PauseGame()
+    {
+        Time.timeScale = 0;
+    }
+
+    private void ResumeGame()
+    {
+        Time.timeScale = 1;
+    }
+
+    public void OpenSettingsScreen()
+    {
+        pauseScreen.SetActive(false);
+        settingsScreen.SetActive(true);
+    }
+
+    public void CloseSettingsScreen()
+    {
+        settingsScreen.SetActive(false);
+        pauseScreen.SetActive(true);
+    }
+
+    public void OpenPauseScreen()
+    {
+        DeactivateGameUI();
+        PauseGame();
+        UnlockCursor();
+    }
+
+    public void ExitPauseScreen()
+    {
+        ActivateGameUI();
+        ResumeGame();
+        LockCursor();
+    }
+
+    public void ExitGame()
+    {
+        SceneManager.LoadScene("MainMenu");
+        ResumeGame();
+    }
+
+    private void ActivateGameUI()
+    {
+        gameUI.SetActive(true);
+        pauseScreen.SetActive(false);
+        settingsScreen.SetActive(false);
+    }
+
+    private void DeactivateGameUI()
+    {
+        gameUI.SetActive(false);
+        pauseScreen.SetActive(true);
+    }
+
+    private void LockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    private void UnlockCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
 }
