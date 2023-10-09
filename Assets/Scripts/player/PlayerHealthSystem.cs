@@ -6,11 +6,14 @@ public class PlayerHealthSystem : MonoBehaviour, IHealth
 {
     public float health { get; set; }
     public float remainingHealth { get; set; }
-    private HealthBar healthBar;
+
+    private HealthBar HealthBar;
+    private PlayerCamera PlayerCameraManager;
 
     public void Start()
     {
-        healthBar = PlayerUI.Instance.healthBar;
+        PlayerCameraManager = GetComponent<FirstPersonMovement>().cameraTransform.GetComponent<PlayerCamera>(); 
+        HealthBar = PlayerUI.Instance.healthBar;
         health = 20;
         remainingHealth = health;
     }
@@ -18,7 +21,8 @@ public class PlayerHealthSystem : MonoBehaviour, IHealth
     public void TakeDamage(float damage)
     {
         remainingHealth -= damage;
-        healthBar.UpdateHealthBar(remainingHealth, health);
+        PlayerCameraManager.CameraShake(0.5f, 0.1f);
+        HealthBar.UpdateHealthBar(remainingHealth, health);
         if (remainingHealth <= 0)
         {
             Die();

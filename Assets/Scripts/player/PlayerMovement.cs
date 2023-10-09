@@ -22,6 +22,7 @@ public class FirstPersonMovement : MonoBehaviour
     private void Start()
     {
         controller = GetComponent<CharacterController>();
+;
         _defaultSpeed = movementSpeed;
         _jumpsRemainig = airJumps;
     }

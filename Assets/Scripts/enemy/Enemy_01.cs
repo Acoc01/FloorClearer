@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Enemy_01 : Enemy
 {
-    public float followRange = 10f;
-    public float attackRange = 2f;
+    [SerializeField] private  float followRange = 300f;
+    public float attackRange = 1f;
     public float moveSpeed = 3f;
     public float attackCooldown = 2f;
 
     private Transform player;
     private float timeSinceLastAttack = 0f; 
+    private float distanceToPlayer;
 
     public EnemyAttack attackScript;
     private Animator animator;
@@ -30,13 +31,13 @@ public class Enemy_01 : Enemy
     {
         timeSinceLastAttack += Time.deltaTime;
 
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-        if (distanceToPlayer <= attackRange && timeSinceLastAttack >= attackCooldown && !IsAttacking())
-        {
-            Attack();
-            animator.SetBool("isWalking", false);
-        }
-        else if (distanceToPlayer <= followRange && distanceToPlayer > attackRange && !IsAttacking())
+        distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        // if (distanceToPlayer <= attackRange && timeSinceLastAttack >= attackCooldown && !IsAttacking())
+        // {
+        //     Attack();
+        //     animator.SetBool("isWalking", false);
+        // }
+        if (distanceToPlayer <= followRange && distanceToPlayer > attackRange )
         {
             FollowPlayer();
             animator.SetBool("isWalking", true);
@@ -75,6 +76,7 @@ public class Enemy_01 : Enemy
     {
         Vector3 direction = (player.position - transform.position).normalized;
         transform.position += direction * moveSpeed * Time.deltaTime;
+        //Debug.Log("following player");
     }
 
     bool IsAttacking()

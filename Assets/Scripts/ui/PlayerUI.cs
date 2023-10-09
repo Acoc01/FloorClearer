@@ -25,6 +25,7 @@ public class PlayerUI : MonoBehaviour
     public SpellUI spellUI;
     public HealthBar healthBar;
     public PointCounter pointCounter;
+    
 
     private void Awake()
     {
@@ -43,6 +44,7 @@ public class PlayerUI : MonoBehaviour
     public GameObject gameUI;
     public GameObject pauseScreen;
     public GameObject settingsScreen;
+    public GameObject pixelFilter;
     public bool isGamePaused = false;
 
     private void PauseGame()
@@ -89,6 +91,7 @@ public class PlayerUI : MonoBehaviour
 
     private void ActivateGameUI()
     {
+        pixelFilter.SetActive(true);
         gameUI.SetActive(true);
         pauseScreen.SetActive(false);
         settingsScreen.SetActive(false);
@@ -96,6 +99,7 @@ public class PlayerUI : MonoBehaviour
 
     private void DeactivateGameUI()
     {
+        pixelFilter.SetActive(false);
         gameUI.SetActive(false);
         pauseScreen.SetActive(true);
     }
